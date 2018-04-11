@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const uniqueValidator = require('mongoose-unique-validator');
 
 const Schema = mongoose.Schema;
 
@@ -6,7 +7,8 @@ const ArticleSchema = new Schema({
 
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: 'This Article already exists'
     },
 
     link: {
@@ -23,13 +25,19 @@ const ArticleSchema = new Schema({
         type: String,
         required: true
     },
-    
-    note: {
+
+    saved: {
+        type: Boolean,
+        default: false
+    },
+
+    notes: [{
         type: Schema.Types.ObjectId,
         ref: "Note"
-    }
+    }]
 });
 
+ArticleSchema.plugin(uniqueValidator);
 const Article = mongoose.model("Article", ArticleSchema);
 
 module.exports = Article;

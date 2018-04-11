@@ -1,11 +1,27 @@
 $(document).ready(() => {
-    $.getJSON('/articles', data => {
-        for (let i in data) {
-            console.log(data[i]);
-            $('#articles').append(`<p data-id='${data[i]._id}'>${data[i].title}<br/>
-            ${data[i].author}<br/>
-            ${data[i].description}<br/>
-            ${data[i].link}</p>`)
-        }
+    $('#scrape').on('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            method: 'GET',
+            url: '/scrape'
+        }).then(data => {
+            alert(data);
+        });
     });
+
+    $('#note').on('click', function(event) {
+        let id = $(this).attr('data-id');
+        $('#noteModal').modal('toggle');
+        $.ajax({
+            method: 'GET',
+            url: '/articles/' + id
+        }).then(data => {
+            console.log(data);
+
+        })
+    });
+
+    $('#saveArticle').on('click', function(event) {
+
+    })
 });

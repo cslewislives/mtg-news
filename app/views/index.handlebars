@@ -1,8 +1,77 @@
-<div id="wrapper">
-    <h1>Note Scraper</h1>
-    <h2>
-        <i>If you can do this...the homework should be no problem.</i>
-    </h2>
-    <div id="articles"></div>
-    <div id="notes"></div>
+<!-- Modal -->
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="noteModalTitle">Notes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    Add rows here
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveNote">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!--
+<script>
+    $('#exampleModal').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        // Use above variables to manipulate the DOM
+
+    });
+</script> --}}
+
+<div id="container">
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+        <a class="navbar-brand" href="#">
+            <h2>MtN</h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Articles
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Saved Articles</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="dislpay-4">Magic: the News</h1>
+            <p class="lead">The Latest Magic: the Gathering News, straight from Wizards of the Coast</p>
+            <p>
+                <a class="btn btn-primary btn-md" id="scrape">Get Articles</a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        {{#each articles}} 
+            {{!-- {{#unless saved}}  --}}
+                {{> articles/article}} 
+            {{!-- {{/unless}}  --}}
+        {{/each}}
+    </div>
+
+
+
+
 </div>
