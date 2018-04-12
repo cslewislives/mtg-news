@@ -31,6 +31,10 @@ const ArticleSchema = new Schema({
         default: false
     },
 
+    date: {
+        type: Date
+    },
+
     notes: [{
         type: Schema.Types.ObjectId,
         ref: "Note"

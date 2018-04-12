@@ -1,0 +1,84 @@
+<!-- Modal -->
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="noteModalTitle">Notes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" id="notes">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="noteInput" id="noteInput" aria-describedby="noteId" placeholder="Type Note Here">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveNote" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alert Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Alert Modal -->
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark primary-color">
+    <a class="navbar-brand" href="/">
+        <h2>MtN</h2>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Articles</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/saved">Saved Articles
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- Navbar -->
+
+<!-- Jumbotron -->
+<div id="container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="dislpay-4">Magic: the Saved</h1>
+            <p class="lead">Your currently saved articles</p>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+
+
+    <div class="row" id="articles">
+        {{#each articles}} {{#if saved}} {{> articles/article}} {{/if}} {{/each}}
+    </div>
+
+</div>
