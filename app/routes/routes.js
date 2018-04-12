@@ -11,6 +11,9 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoHeadlin
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
+/*===========================================
+                ROUTES
+=============================================*/
 router.get('/', (req, res) => {
     db.Article.find({
         'saved': false

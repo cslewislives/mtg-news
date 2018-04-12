@@ -1,4 +1,8 @@
 $(document).ready(() => {
+    /*===========================================
+    Sends Scrape and reloads page to show artices
+    =============================================*/
+
     $('#scrape').on('click', function (event) {
         event.preventDefault();
         $.ajax({
@@ -15,6 +19,9 @@ $(document).ready(() => {
         });
     });
 
+    /*===========================================
+    Opens the notes modal and allows for note saving
+    =============================================*/
     $('#articles').on('click', '.notes', function (event) {
         console.log('clicked');
         let id = $(this).attr('data-id');
@@ -52,6 +59,9 @@ $(document).ready(() => {
         
     });
 
+    /*===========================================
+                Deletes saved notes
+    =============================================*/
     $(document).off().on('click', '.deleteNote', function(event) {
         console.log('clicked');
         let noteId = $(this).attr('data-id');
@@ -64,7 +74,9 @@ $(document).ready(() => {
         });
     });
     
-
+    /*===========================================
+    Saves the articles and removes them from main page
+    =============================================*/
     $('#articles').on('click', '.saveArticle', function (event) {
         let id = $(this).attr('data-id');
         $.ajax({
@@ -81,6 +93,9 @@ $(document).ready(() => {
         });
     });
 
+    /*===========================================
+            Removes articles from saved
+    =============================================*/
     $('#articles').on('click', '.remove', function (event) {
         let id = $(this).attr('data-id');
         $.ajax({

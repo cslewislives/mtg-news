@@ -1,4 +1,18 @@
+body {
+    background: url("/assets/images/eleshnorn.jpg")no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 div .deleteNote {
     display: inline-block;
     padding: 6px;
+}
+
+.jumbotron {
+    opacity: 0.8;
+}
+
+.card {
+    opacity: 0.8;
 }
