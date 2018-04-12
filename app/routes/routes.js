@@ -11,10 +11,6 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoHeadlin
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
-// router.get('/', (req, res) => {
-//     res.render('index');
-// });
-
 router.get('/', (req, res) => {
     db.Article.find({
         'saved': false
@@ -68,8 +64,9 @@ router.post('/saved/:id', (req, res) => {
         saved: true
     }, result => {
         res.send('Article has been saved');
-    })
-})
+    });
+});
+
 
 router.get('/saved', (req, res) => {
     db.Article.find({
@@ -87,7 +84,9 @@ router.get('/saved', (req, res) => {
 router.get('/articles/:id', (req, res) => {
     let id = req.params.id;
 
-    db.Article.findOne({_id: id}).populate('notes').then(dbArticle => {
+    db.Article.findOne({
+        _id: id
+    }).populate('notes').then(dbArticle => {
         res.json(dbArticle)
     }).catch(err => {
         res.json(err);
@@ -98,15 +97,65 @@ router.post('/articles/:id', (req, res) => {
     let id = req.params.id;
     console.log(req.body);
     db.Note.create(req.body).then(dbNote => {
-        db.Article.findOneAndUpdate({_id: id}, {$push: {notes: dbNote._id} }, {new: true}).then(dbArticle => {
+        db.Article.findOneAndUpdate({
+            _id: id
+        }, {
+            $push: {
+                notes: dbNote._id
+            }
+        }, {
+            new: true
+        }).then(dbArticle => {
             res.json(dbArticle);
         }).catch(err => {
             res.json(err);
         });
     });
-
-
 });
 
+router.post('/deleted/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    db.Article.findOneAndUpdate({
+        _id: id
+    }, {
+        saved: false
+    }, {
+        new: true
+    }, result => {
+        db.Article.update({
+            _id: id
+        }, {
+            $set: {
+                notes: []
+            }
+        }, (err, result) => {
+            if (err) throw err;
+            else {
+                res.send(`${id} has been removed from Saved`);
+            }
+        });
+    });
+});
+
+router.delete('/notes/:id', (req, res) => {
+    let id = req.params.id;
+
+    db.Note.findOneAndRemove({
+        _id: id
+    }).then(data => {
+        db.Article.update({
+            notes: id
+        }, {
+            $pull: {
+                notes: id
+            }
+        }, response => {
+            res.send('Success');
+        })
+    }).catch(err => {
+        if (err) throw err;
+    });
+});
 
 module.exports = router;

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id={{_id}}>
     <div class="row" style="margin-bottom: 10px">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="card" data-saved={{saved}}>
@@ -7,11 +7,11 @@
                     <h5 class="card-subtitle mb-2 text-muted">{{author}}</h5>
                     <h4 id="description">{{description}}</h4>
                     <a class="btn btn-primary btn-sm" id="link" href={{link}}>Check out the Article</a>
-                    <a class="btn btn-success btn-sm" id={{#unless saved}} 'saveArticle' {{else}} 'note' {{/unless}} data-id={{_id}}>
+                    <a class="btn btn-success btn-sm {{#unless saved}}saveArticle{{else}}notes{{/unless}}" data-id={{_id}}>
                         {{#unless saved}} Save Article {{else}} Notes {{/unless}}
                     </a>
                     {{#if saved}}
-                    <a class="btn btn-danger btn-sm" id="remove" data-id={{_id}}>Remove from Saved</a>
+                    <a class="btn btn-danger btn-sm remove" data-id={{_id}}>Remove from Saved</a>
                     {{/if}}
                 </div>
             </div>

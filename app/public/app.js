@@ -15,7 +15,8 @@ $(document).ready(() => {
         });
     });
 
-    $('#note').on('click', function (event) {
+    $('#articles').on('click', '.notes', function (event) {
+        console.log('clicked');
         let id = $(this).attr('data-id');
         $('#noteModal').modal('toggle');
         $('#notes').empty();
@@ -25,12 +26,14 @@ $(document).ready(() => {
         }).then(data => {
             console.log(data);
             let notes = data.notes;
+            let list = $("<ul>")
             notes.forEach(element => {
-                $('#notes').append(`<li id=${element._id}>${element.body}<div type="button" class="btn btn-danger btn-sm" id='deleteNote' data-id=${element._id} data-dismiss="modal">X</div></li><br/>`);
+                list.append(`<li id=${element._id}>${element.body}<div type="button" class="btn btn-danger deleteNote" data-id=${element._id}>X</div></li>\n`);
             });
+            $('#notes').html(list)
         });
 
-        $('#saveNote').on('click', function (event) {
+        $('#saveNote').off().on('click', function (event) {
             let newNote = $('#noteInput').val();
             console.log(newNote);
             let note = {
@@ -42,25 +45,28 @@ $(document).ready(() => {
                 data: note
             }).then(data => {
                 toastr['success'](`A new note has been added to ${data._id}`)
-                $('#noteInput').empty();
+                $('#noteInput').val('');
+                $('#noteModal').modal('hide');
             })
         })
         
     });
 
-    $('#deleteNote').on('click', function(event) {
-        let id = $(this).attr('data-id');
-
+    $(document).off().on('click', '.deleteNote', function(event) {
+        console.log('clicked');
+        let noteId = $(this).attr('data-id');
         $.ajax({
             method: 'DELETE',
-            url: `/notes/${id}`
+            url: `/notes/${noteId}`
         }).then(data => {
-            toastr['warning'](`Note ${id} deleted`);
+            toastr['warning'](`Note ${noteId} deleted`);
+            $('li').remove(`#${noteId}`);
         });
     });
+    
 
-    $('#saveArticle').on('click', function (event) {
-        let id = $('#saveArticle').attr('data-id');
+    $('#articles').on('click', '.saveArticle', function (event) {
+        let id = $(this).attr('data-id');
         $.ajax({
             method: 'POST',
             url: `/saved/${id}`
@@ -70,8 +76,26 @@ $(document).ready(() => {
                 $('#alertModal').modal('toggle');
             }
             $('#alertModal').on('hidden.bs.modal', function () {
-                location.reload();
+                $('div').remove(`#${id}`)
             });
         });
     });
+
+    $('#articles').on('click', '.remove', function (event) {
+        let id = $(this).attr('data-id');
+        $.ajax({
+            method: 'POST',
+            url: `/deleted/${id}`
+        }).then(data => {
+            if (data) {
+                $('.modal-body').text(data);
+                $('#alertModal').modal('toggle');
+            }
+            $('#alertModal').on('hidden.bs.modal', function () {
+                $('div').remove(`#${id}`)
+            });
+        });
+    });
+
+
 });
